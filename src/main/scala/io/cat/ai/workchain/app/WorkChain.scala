@@ -79,7 +79,7 @@ protected class DefaultWorkChain (override val id: String) extends WorkChain {
 
 object WorkChain {
 
-  private def appId: String = s"TaskSpateApp-${UUID.randomUUID}"
+  private def appId: String = s"WorkChainApp-${UUID.randomUUID}"
 
   private lazy val defaultInstance: DefaultWorkChain = new DefaultWorkChain(appId)
 

@@ -17,9 +17,9 @@ object WorkChainEnv {
   private val apps: mutable.Map[String, WorkChain] = new mutable.HashMap[String, WorkChain]
   private val sessionExecutorsMap: mutable.Map[String, AbstractDagJobExecutor] = new mutable.HashMap[String, AbstractDagJobExecutor]
 
-  private def registerApp(taskSpate: WorkChain): Unit = {
-    apps += taskSpate.id -> taskSpate
-    sessionExecutorsMap += taskSpate.id -> taskSpate.executorGroup
+  private def registerApp(workChain: WorkChain): Unit = {
+    apps += workChain.id -> workChain
+    sessionExecutorsMap += workChain.id -> workChain.executorGroup
   }
 
   def createDAG: DirectedAcyclicGraph[Job, Edge[Job]] = dag.empty[Job, Edge[Job]]
