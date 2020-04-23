@@ -95,7 +95,7 @@ object WorkChainSession {
 
   import java.util.UUID
 
-  def generateId: String = s"TaskSession-${UUID.randomUUID}"
+  def generateId: String = s"WorkChainSession-${UUID.randomUUID}"
 
   def createDefaultSession(sessionId: String = generateId,
                            exMode: ExecutionMode,
