@@ -23,7 +23,6 @@ protected[manager] class StampedLockJobSetManager(val schedulerAllJobs: MutSet[J
   override def jobState(schedulerId: String, job: Job): Option[State] = schedulerJobState.get(job)
 
   override def takeJob: Option[Job] = {
-
     def takeJobOpt(iterator: Iterator[Job]): Option[Job] = {
 
       @tailrec
@@ -31,10 +30,7 @@ protected[manager] class StampedLockJobSetManager(val schedulerAllJobs: MutSet[J
         if (condition) {
           val job = iterator.next
 
-          (if (schedulerChainedJobs.contains(job))
-            schedulerChainedJobs.get(job)
-          else
-            None) match {
+          schedulerChainedJobs.get(job) match {
             case Some(chainedJobs) if chainedJobs.isEmpty => Some(job)
             case Some(_) => innerLoop(iterator.hasNext, acc)
             case None => Some(job)
@@ -104,8 +100,7 @@ protected[manager] class StampedLockJobSetManager(val schedulerAllJobs: MutSet[J
   override def removeJob(schedulerId: String, job: Job): Option[Job] = {
     writeLock.lock()
     try
-      if (schedulerAllJobs remove job)
-        Some(job)
+      if (schedulerAllJobs remove job) Some(job)
       else None
     finally writeLock.unlock()
   }
